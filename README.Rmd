@@ -1,0 +1,54 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo=FALSE, results="hide", message=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  results="hide",
+  eval = FALSE,
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+library("badger", quietly = TRUE)
+```
+
+<a href={https://github.com/Ehyaei/IRISUtils}><img src="man/figures/IRISUtils.svg" alt="IRISUtils logo" align="right" width="160" style="padding: 0 15px; float: right;"/>
+
+# IRISUtils
+
+```{r, echo = FALSE, results='asis', message=FALSE,eval=TRUE}
+cat(
+  badger::badge_github_actions("Ehyaei/IRISUtils"),
+  badger::badge_devel("Ehyaei/IRISUtils", "orange"),
+  badger::badge_lifecycle("experimental"),
+  badger::badge_last_commit("Ehyaei/IRISUtils")
+)
+```
+
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of IRISUtils is to ...
+
+## Installation
+
+You can install the development version of IRISUtils like so:
+
+``` r
+
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(IRISUtils)
+## basic example code
+```
+
