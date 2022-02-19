@@ -38,7 +38,7 @@ function_to_Rscript(
 )
 ```
 
-```{r}
+```{r,eval=FALSE}
 partitions_files = list.files("/data/array/mshoai/ADprogressionData/ADNI/data_partitions/", full.names = T)[1:10] 
 
 save_model_path = "/data/array/mshoai/ADprogressionData/ADNI/models/full_model/"
