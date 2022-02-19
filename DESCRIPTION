@@ -3,14 +3,14 @@ Type: Package
 Title: This package contains many functions that were used in the UCL IRIS projects.
 Version: 0.1.0
 Authors@R: 
-    person(given = "Ahmad",
+    c(person(given = "Ahmad",
            family = "Ehyaei",
            role = c("aut", "cre"),
-           email = "ahmad.ehyaei@gmail.com")
+           email = "ahmad.ehyaei@gmail.com"),
     person(given = "Maryam",
            family = "Shoai",
-           role = c("aut", "cre"),
-           email = "m.shoai@ucl.ac.uk")
+           role = c("aut"),
+           email = "m.shoai@ucl.ac.uk"))
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: We decided to establish IRIS Utils in order to create organized and 
     reusable scripts for our projects. This package includes a variety of general 

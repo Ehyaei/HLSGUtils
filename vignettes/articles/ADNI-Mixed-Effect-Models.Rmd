@@ -12,3 +12,29 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(IRISUtils)
 ```
+
+# Mixed Effect Models
+
+```{r, eval=FALSE}
+wgs_adno_partitioner(
+  partition_number = 300,
+  clinical_variables = c("MMSE", "GENDER","AGE", "MMSE.bl", "PTEDUCAT", "PTID", "VISID"),
+  pca_components = c("PC1", "PC2", "PC3"),
+  wgs_path = "/data/array/mshoai/ADprogressionData/ADNI/WGScompletedQC_phenoed.raw",
+  pca_path = "/data/array/mshoai/ADprogressionData/ADNI/ADNIprunedpostQCPCA.eigenvec",
+  adni_path = "/data/array/mshoai/ADprogressionData/ADNI/adnimerge.RData",
+  partitions_save_path = "/data/array/mshoai/ADprogressionData/ADNI/data_partitions/")
+```
+
+
+```{r, eval=FALSE}
+function_to_Rscript(
+  script_name = "Parallel_Modeling.R", 
+  function_from_source = NULL,
+  function_name = "lmer_modeling",
+  packages =  c("ADNIUtils"),
+  arguments = c("data_path", "simulation_name", "formula", "save_model_path"),
+  arguments_class = c("character", "character", "character", "character")
+)
+```
+
