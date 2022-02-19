@@ -39,7 +39,7 @@ lmer_modeling <- function(
 
   # ----------------------------- #
   # Find Name of File
-  file_name <- str_split(data_path, "/") %>%
+  file_name <- stringr::str_split(data_path, "/") %>%
     unlist() %>%
     last() %>%
     gsub("csv","rds",.) %>%
@@ -54,7 +54,7 @@ lmer_modeling <- function(
   # --------------------- #
   # Run Model
   model_data[,.(
-    coefficients = list(summary(lmer(as.formula(formula), REML = TRUE))$coefficients)
+    coefficients = list(summary(lmerTest::lmer(eval(formula), REML = TRUE))$coefficients)
   ), by = "snp"] -> fitted_model
 
 
