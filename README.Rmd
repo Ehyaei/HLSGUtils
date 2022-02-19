@@ -22,7 +22,6 @@ library("badger", quietly = TRUE)
 
 ```{r, echo = FALSE, results='asis', message=FALSE,eval=TRUE}
 cat(
-  badger::badge_github_actions("Ehyaei/IRISUtils"),
   badger::badge_devel("Ehyaei/IRISUtils", "orange"),
   badger::badge_lifecycle("experimental"),
   badger::badge_last_commit("Ehyaei/IRISUtils")
@@ -40,7 +39,8 @@ The goal of IRISUtils is to ...
 You can install the development version of IRISUtils like so:
 
 ``` r
-
+# install.packages("remotes")
+remotes::install_github("tidyverse/dplyr")
 ```
 
 ## Example
