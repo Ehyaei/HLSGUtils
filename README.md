@@ -20,7 +20,7 @@ You can install the development version of IRISUtils like so:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("tidyverse/dplyr")
+remotes::install_github("Ehyaei/IRISUtils")
 ```
 
 ## Example

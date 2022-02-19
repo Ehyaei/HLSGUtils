@@ -29,7 +29,7 @@ wgs_adno_partitioner(
 
 ```{r, eval=FALSE}
 function_to_Rscript(
-  script_name = "Parallel_Modeling.R", 
+  script_name = "/data/array/mshoai/ADprogressionData/ADNI/scripts/Parallel_Modeling.R", 
   function_from_source = NULL,
   function_name = "lmer_modeling",
   packages =  c("ADNIUtils"),
@@ -37,4 +37,22 @@ function_to_Rscript(
   arguments_class = c("character", "character", "character", "character")
 )
 ```
+
+```{r}
+partitions_files = list.files("/data/array/mshoai/ADprogressionData/ADNI/data_partitions/", full.names = T)[1:10] 
+
+save_model_path = "/data/array/mshoai/ADprogressionData/ADNI/models/full_model/"
+formula = "MMSE~ SEX + AGE+ MMSE.bl + PC1 +PC2 +PC3+ PTEDUCAT + copy_number + (1|PTID) + (1|VISID)"
+parallel_rscripts(
+  rscript_path = "/data/array/mshoai/ADprogressionData/ADNI/scripts/Parallel_Modeling.R",
+  args = list(data_path = partitions_files, simulation_name = "full_model",
+              formula = formula, save_model_path = save_model_path),
+  core_numbers = 50,
+  free_memory_treshold = 75,
+  free_cpu_treshold = 75,
+  sleep_time = 10
+)
+```
+
+
 

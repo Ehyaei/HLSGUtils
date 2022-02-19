@@ -12,7 +12,6 @@ wgs_adno_partitioner(
   wgs_path,
   pca_path,
   adni_path,
-  snp_names_save_path,
   partitions_save_path,
   fill_col = NULL
 )
@@ -30,20 +29,20 @@ wgs_adno_partitioner(
 
 \item{adni_path}{is path of adnimerge.RData. It must contains clinical_variables columns.}
 
-\item{snp_names_save_path}{is the save path of SNP names.}
-
 \item{partitions_save_path}{is the save path of data partitions.}
 
 \item{fill_col}{Fills missing values in selected columns using previous entry.}
+
+\item{snp_names_save_path}{is the save path of SNP names.}
 }
 \value{
 
 }
 \description{
-This function creates data partitions for `lmer` modeling. 
-To create data, first we load adnimerge and select specific columns. 
-Then we load the WGS PCA data and select the required columns. 
-In the next step, merge the two datasets into one. 
-Finally, we merge WGS data by `PTID`. Data is melted and created into a 
+This function creates data partitions for `lmer` modeling.
+To create data, first we load adnimerge and select specific columns.
+Then we load the WGS PCA data and select the required columns.
+In the next step, merge the two datasets into one.
+Finally, we merge WGS data by `PTID`. Data is melted and created into a
 tidy version before being used in data.table format.
 }

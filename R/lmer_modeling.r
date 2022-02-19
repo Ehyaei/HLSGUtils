@@ -29,6 +29,7 @@ lmer_modeling <- function(
   setDTthreads(1) # Set data.table working cores
   suppressMessages(library(magrittr))
   suppressMessages(library(lmerTest))
+  suppressMessages(library(stringr))
 
   # ----------------------------- #
   # Turn off warning and messages

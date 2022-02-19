@@ -5,7 +5,7 @@
 \title{Run R Scripts Parallel with System Control}
 \usage{
 parallel_rscripts(
-  rscript_path = "/data/array/mshoai/ADprogressionData/ADNI/scripts/data_modeling.r",
+  rscript_path,
   args,
   core_numbers = 50,
   free_memory_treshold = 75,
