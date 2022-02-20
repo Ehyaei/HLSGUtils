@@ -57,9 +57,9 @@ parallel_rscripts <- function(
 
     # ----------------------------
     # Check System Status
-    cpu_percent <- psutil$cpu_percent(interval=2)
-    virtual_memory <- psutil$virtual_memory()["percent"]
-    swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))
+    invisible(capture.output(cpu_percent <- psutil$cpu_percent(interval=2)))
+    invisible(capture.output(virtual_memory <- psutil$virtual_memory()["percent"]))
+    invisible(capture.output(swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))))
 
 
     while(virtual_memory > free_memory_treshold & cpu_percent > free_cpu_treshold){
@@ -70,9 +70,9 @@ parallel_rscripts <- function(
 
       # ----------------------------
       # Check system stats
-      cpu_percent <- psutil$cpu_percent(interval=2)
-      virtual_memory <- psutil$virtual_memory()["percent"]
-      swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))
+      invisible(capture.output(cpu_percent <- psutil$cpu_percent(interval=2)))
+      invisible(capture.output(virtual_memory <- psutil$virtual_memory()["percent"]))
+      invisible(capture.output(swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))))
 
       # ----------------------------
       # every 10 second check system
