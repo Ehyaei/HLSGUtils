@@ -52,7 +52,7 @@ lmer_modeling <- function(
 
   # --------------------- #
   # Run Model
-  model_data[,.(
+  model_data[,list(
     coefficients = list(summary(lmerTest::lmer(eval(formula), REML = TRUE))$coefficients)
   ), by = "snp"] -> fitted_model
 
