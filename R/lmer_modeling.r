@@ -47,8 +47,7 @@ lmer_modeling <- function(
 
   # ----------------------------- #
   # Read Data
-  model_data <- fread(data_path) %>%
-    .[,GENDER:= as.factor(GENDER)]
+  model_data <- fread(data_path)[,GENDER:= as.factor(GENDER)]
 
 
   # --------------------- #
