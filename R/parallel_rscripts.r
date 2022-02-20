@@ -33,7 +33,7 @@ parallel_rscripts <- function(
 
   # ----------------------------
   # Load psutil python package
-  psutil <- import("psutil")
+  invisible(capture.output(psutil <- import("psutil")))
 
   # ----------------------------
   # Extract job number from args input
