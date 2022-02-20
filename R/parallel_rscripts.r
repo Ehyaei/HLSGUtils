@@ -25,6 +25,12 @@ parallel_rscripts <- function(
   suppressMessages(library(magrittr))
   suppressMessages(library(reticulate))
 
+  # ----------------------------- #
+  # Turn off warning and messages
+  options(warn=-1)
+  options(message=-1)
+
+
   # ----------------------------
   # Load psutil python package
   psutil <- import("psutil")
