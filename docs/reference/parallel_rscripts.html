@@ -57,10 +57,10 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">parallel_rscripts</span><span class="op">(</span>
   <span class="va">rscript_path</span>,
   <span class="va">args</span>,
-  core_numbers <span class="op">=</span> <span class="fl">50</span>,
   free_memory_treshold <span class="op">=</span> <span class="fl">75</span>,
   free_cpu_treshold <span class="op">=</span> <span class="fl">75</span>,
-  sleep_time <span class="op">=</span> <span class="fl">10</span>
+  sleep_time <span class="op">=</span> <span class="fl">10</span>,
+  swap <span class="op">=</span> <span class="fl">8</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -70,14 +70,14 @@
 <dd><p>path of rscript.</p></dd>
 <dt>args</dt>
 <dd><p>input arguments of rscript.</p></dd>
-<dt>core_numbers</dt>
-<dd><p>number of cores to run parallel jobs</p></dd>
 <dt>free_memory_treshold</dt>
 <dd><p>upper bound for memory usage</p></dd>
 <dt>free_cpu_treshold</dt>
 <dd><p>upper bound for CPU usage</p></dd>
 <dt>sleep_time</dt>
 <dd><p>sleep time between two jobs in seconds</p></dd>
+<dt>swap</dt>
+<dd><p>server swap memory in GB</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
