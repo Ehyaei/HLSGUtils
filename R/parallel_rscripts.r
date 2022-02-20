@@ -60,13 +60,13 @@ parallel_rscripts <- function(
 
       # ----------------------------
       # If Swap is filled Kill all Process
-      # if(swap_memory > 95){system("pkill -u mshoai")}
+      if(swap_memory > 95){system("pkill -u mshoai")}
 
       # ----------------------------
       # Check system stats
       cpu_percent <- psutil$cpu_percent(interval=2)
       virtual_memory <- psutil$virtual_memory()["percent"]
-      swap_memory <- psutil$swap_memory()["used"]
+      swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))
 
       # ----------------------------
       # every 10 second check system
