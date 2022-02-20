@@ -5,6 +5,7 @@
 #' @param free_memory_treshold upper bound for memory usage
 #' @param free_cpu_treshold upper bound for CPU usage
 #' @param sleep_time sleep time between two jobs in seconds
+#' @param swap server swap memory in GB
 #'
 #' @return
 #' @export
@@ -15,7 +16,8 @@ parallel_rscripts <- function(
   args,
   free_memory_treshold = 75,
   free_cpu_treshold = 75,
-  sleep_time = 10
+  sleep_time = 10,
+  swap = 8
 ){
 
   # ----------------------------
@@ -51,7 +53,7 @@ parallel_rscripts <- function(
     # Check System Status
     cpu_percent <- psutil$cpu_percent(interval=2)
     virtual_memory <- psutil$virtual_memory()["percent"]
-    swap_memory <- psutil$swap_memory()["used"]
+    swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))
 
 
     while(virtual_memory > free_memory_treshold & cpu_percent > free_cpu_treshold){

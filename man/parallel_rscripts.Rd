@@ -7,10 +7,10 @@
 parallel_rscripts(
   rscript_path,
   args,
-  core_numbers = 50,
   free_memory_treshold = 75,
   free_cpu_treshold = 75,
-  sleep_time = 10
+  sleep_time = 10,
+  swap = 8
 )
 }
 \arguments{
@@ -18,13 +18,13 @@ parallel_rscripts(
 
 \item{args}{input arguments of rscript.}
 
-\item{core_numbers}{number of cores to run parallel jobs}
-
 \item{free_memory_treshold}{upper bound for memory usage}
 
 \item{free_cpu_treshold}{upper bound for CPU usage}
 
 \item{sleep_time}{sleep time between two jobs in seconds}
+
+\item{swap}{server swap memory in GB}
 }
 \value{
 

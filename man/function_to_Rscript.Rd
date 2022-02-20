@@ -8,7 +8,7 @@ function_to_Rscript(
   script_name = "Parallel_Modeling.R",
   function_from_source = NULL,
   function_name = "lmer_modeling",
-  packages = c("ADNIUtils"),
+  packages = c("IRISUtils"),
   arguments = c("data_path", "simulation_name", "formula", "save_model_path"),
   arguments_class = c("character", "character", "character", "character")
 )

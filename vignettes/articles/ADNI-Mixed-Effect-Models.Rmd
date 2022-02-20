@@ -48,7 +48,6 @@ parallel_rscripts(
               simulation_name = "full_model",
               formula = formula, 
               save_model_path = save_model_path),
-  core_numbers = 50,
   free_memory_treshold = 75,
   free_cpu_treshold = 75,
   sleep_time = 10
