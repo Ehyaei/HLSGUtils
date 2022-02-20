@@ -60,7 +60,7 @@ parallel_rscripts <- function(
 
       # ----------------------------
       # If Swap is filled Kill all Process
-      if(swap_memory > 95){system("pkill -u mshoai")}
+      # if(swap_memory > 95){system("pkill -u mshoai")}
 
       # ----------------------------
       # Check system stats
