@@ -33,7 +33,7 @@ parallel_rscripts <- function(
 
   # ----------------------------
   # Load psutil python package
-  invisible(capture.output(psutil <- import("psutil")))
+  psutil <- import("psutil")
 
   # ----------------------------
   # Extract job number from args input
@@ -57,9 +57,9 @@ parallel_rscripts <- function(
 
     # ----------------------------
     # Check System Status
-    invisible(capture.output(cpu_percent <- psutil$cpu_percent(interval=2)))
-    invisible(capture.output(virtual_memory <- psutil$virtual_memory()["percent"]))
-    invisible(capture.output(swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))))
+    cpu_percent <- psutil$cpu_percent(interval=2)
+    virtual_memory <- psutil$virtual_memory()["percent"]
+    swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))
 
 
     while(virtual_memory > free_memory_treshold & cpu_percent > free_cpu_treshold){
@@ -70,14 +70,15 @@ parallel_rscripts <- function(
 
       # ----------------------------
       # Check system stats
-      invisible(capture.output(cpu_percent <- psutil$cpu_percent(interval=2)))
-      invisible(capture.output(virtual_memory <- psutil$virtual_memory()["percent"]))
-      invisible(capture.output(swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))))
+      cpu_percent <- psutil$cpu_percent(interval=2)
+      virtual_memory <- psutil$virtual_memory()["percent"]
+      swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))
 
       # ----------------------------
       # every 10 second check system
       Sys.sleep(10)
     }
+    print(paste("CPU:",cpu_percent, "Memory", virtual_memory))
 
     # Add start, end and simulation name to R Script
     system(paste(script_command, paste0(unlist(args_df[i,]),collapse = " ")), wait = FALSE)
