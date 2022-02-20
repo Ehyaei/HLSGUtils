@@ -32,17 +32,16 @@ function_to_Rscript(
   script_name = "/data/array/mshoai/ADprogressionData/ADNI/scripts/Parallel_Modeling.R", 
   function_from_source = NULL,
   function_name = "lmer_modeling",
-  packages =  c("ADNIUtils"),
+  packages =  c("IRISUtils"),
   arguments = c("data_path", "simulation_name", "formula", "save_model_path"),
   arguments_class = c("character", "character", "character", "character")
 )
 ```
 
 ```{r,eval=FALSE}
-partitions_files = list.files("/data/array/mshoai/ADprogressionData/ADNI/data_partitions/", full.names = T)[1:10] 
-
+partitions_files = list.files("/data/array/mshoai/ADprogressionData/ADNI/data_partitions/", full.names = T) 
 save_model_path = "/data/array/mshoai/ADprogressionData/ADNI/models/full_model/"
-formula = "MMSE~ GENDER + AGE + MMSE.bl + PC1 +PC2 +PC3+ PTEDUCAT + copy_number + (1|PTID) + (1|VISID)"
+formula = "MMSE~GENDER+AGE+MMSE.bl+PC1+PC2+PC3+PTEDUCAT+copy_number+(1|PTID)+(1|VISID)"
 parallel_rscripts(
   rscript_path = "/data/array/mshoai/ADprogressionData/ADNI/scripts/Parallel_Modeling.R",
   args = list(data_path = partitions_files, simulation_name = "full_model",

@@ -48,7 +48,7 @@ lmer_modeling <- function(
   # ----------------------------- #
   # Read Data
   model_data <- fread(data_path) %>%
-    .[,c("GENDER", "PTID", "VISID"):= list(as.factor(GENDER), as.character(PTID), as.character(VISID))]
+    .[,GENDER:= as.factor(GENDER)]
 
 
   # --------------------- #
