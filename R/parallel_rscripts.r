@@ -73,11 +73,8 @@ parallel_rscripts <- function(
       swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))
       # ----------------------------
       # every 10 second check system
-      print(k); k = k+1
       Sys.sleep(10)
     }
-
-    print(paste("CPU:",cpu_percent, "Memory", virtual_memory))
 
     # Add start, end and simulation name to R Script
     system(paste(script_command, paste0(unlist(args_df[i,]),collapse = " ")), wait = FALSE)

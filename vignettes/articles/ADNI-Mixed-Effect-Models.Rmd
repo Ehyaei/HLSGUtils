@@ -52,7 +52,7 @@ parallel_rscripts(
               save_model_path = save_model_path),
   free_memory_treshold = 80,
   free_cpu_treshold = 80,
-  sleep_time = 5
+  sleep_time = 10
 )
 ```
 
