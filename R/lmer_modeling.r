@@ -30,6 +30,7 @@ lmer_modeling <- function(
   suppressMessages(library(magrittr))
   suppressMessages(library(lmerTest))
   suppressMessages(library(stringr))
+  suppressMessages(library(dplyr))
 
   # ----------------------------- #
   # Turn off warning and messages
@@ -47,16 +48,20 @@ lmer_modeling <- function(
 
   # ----------------------------- #
   # Read Data
-  model_data <- fread(data_path)
-  model_data$GENDER = as.factor(model_data$GENDER)
+  model_data <- fread(data_path) %>%
+    mutate(VISID = as.factor(VISID), PTID = as.factor(PTID))
+
+  # TODO: remove this line
+  if("GENDER" %in% colnames(model_data)){
+    model_data$GENDER = as.factor(model_data$GENDER)
+  }
 
   # --------------------- #
   # Run Model
-  model_data[,list(
-    coefficients = list(summary(lmerTest::lmer(eval(parse(text = formula)), REML = TRUE))$coefficients)
-  ), by = "snp"] -> fitted_model
 
-
+  fitted_model <- model_data %>%
+    group_by(snp) %>%
+    summarise(coefficients = list(summary(lmerTest::lmer(eval(formula), REML = TRUE))$coefficients))
   # --------------------- #
   # Save coefficients
   readr::write_rds(fitted_model,

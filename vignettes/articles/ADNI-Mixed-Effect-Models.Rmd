@@ -41,7 +41,7 @@ function_to_Rscript(
 ```{r,eval=FALSE}
 partitions_files = list.files("/data/array/mshoai/ADprogressionData/ADNI/data_partitions/", full.names = T) 
 save_model_path = "/data/array/mshoai/ADprogressionData/ADNI/models/full_model/"
-formula = "MMSE~GENDER+AGE+MMSE.bl+PC1+PC2+PC3+PTEDUCAT+copy_number+(1|PTID)+(1|VISID)"
+formula = paste0("'","MMSE~GENDER+AGE+MMSE.bl+PC1+PC2+PC3+PTEDUCAT+copy_number+(1|PTID)+(1|VISID)","'")
 parallel_rscripts(
   rscript_path = "/data/array/mshoai/ADprogressionData/ADNI/scripts/Parallel_Modeling.R",
   args = list(data_path = partitions_files, 
