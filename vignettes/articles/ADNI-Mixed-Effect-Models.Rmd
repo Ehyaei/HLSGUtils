@@ -39,6 +39,7 @@ function_to_Rscript(
 ```
 
 ```{r,eval=FALSE}
+library(IRISUtils)
 partitions_files = list.files("/data/array/mshoai/ADprogressionData/ADNI/data_partitions/", full.names = T)
 save_model_path = "/data/array/mshoai/ADprogressionData/ADNI/models/full_model/"
 formula = paste0("'","MMSE~GENDER+AGE+MMSE.bl+PC1+PC2+PC3+PTEDUCAT+copy_number+(1|PTID)+(1|VISID)","'")
@@ -49,9 +50,9 @@ parallel_rscripts(
               simulation_name = "full_model",
               formula = formula,
               save_model_path = save_model_path),
-  free_memory_treshold = 90,
-  free_cpu_treshold = 90,
-  sleep_time = 10
+  free_memory_treshold = 80,
+  free_cpu_treshold = 80,
+  sleep_time = 5
 )
 ```
 
