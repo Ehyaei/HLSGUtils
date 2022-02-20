@@ -62,7 +62,7 @@ parallel_rscripts <- function(
     swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))
 
 
-    while(virtual_memory > free_memory_treshold & cpu_percent > free_cpu_treshold){
+    while(virtual_memory > free_memory_treshold  || cpu_percent > free_cpu_treshold){
 
       # ----------------------------
       # If Swap is filled Kill all Process
