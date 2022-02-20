@@ -2,7 +2,6 @@
 #'
 #' @param rscript_path path of rscript.
 #' @param args input arguments of rscript.
-#' @param core_numbers number of cores to run parallel jobs
 #' @param free_memory_treshold upper bound for memory usage
 #' @param free_cpu_treshold upper bound for CPU usage
 #' @param sleep_time sleep time between two jobs in seconds
@@ -14,7 +13,6 @@
 parallel_rscripts <- function(
   rscript_path,
   args,
-  core_numbers = 50,
   free_memory_treshold = 75,
   free_cpu_treshold = 75,
   sleep_time = 10
