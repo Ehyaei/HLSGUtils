@@ -13,7 +13,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 lmer_modeling <- function(
   data_path,
   simulation_name,

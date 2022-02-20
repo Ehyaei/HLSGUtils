@@ -10,7 +10,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 function_to_Rscript <- function(
   script_name = "Parallel_Modeling.R",
   function_from_source = NULL,

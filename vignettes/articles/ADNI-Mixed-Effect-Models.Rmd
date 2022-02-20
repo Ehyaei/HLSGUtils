@@ -15,21 +15,44 @@ library(IRISUtils)
 
 # Mixed Effect Models
 
+`wgs_adno_partitioner` function create data partitions from ADNI datasets.
+To run mixed effect model on ADNI data we have three data source:
+
+- ADNI dataset
+- ADNI WGS dataset
+- PCA of ADNI WGS data set
+
+We also set the variables from each data source in function arguments:
+- clinical_variables: variables in ADNI dataset
+- pca_components: column related to PCA components
+
+After fix input data path, we set number of partitions and partitions save directory.
+
 ```{r, eval=FALSE}
 wgs_adno_partitioner(
   partition_number = 300,
   clinical_variables = c("MMSE", "GENDER","AGE", "MMSE.bl", "PTEDUCAT", "PTID", "VISID"),
   pca_components = c("PC1", "PC2", "PC3"),
-  wgs_path = "/data/array/mshoai/ADprogressionData/ADNI/WGScompletedQC_phenoed.raw",
-  pca_path = "/data/array/mshoai/ADprogressionData/ADNI/ADNIprunedpostQCPCA.eigenvec",
-  adni_path = "/data/array/mshoai/ADprogressionData/ADNI/adnimerge.RData",
-  partitions_save_path = "/data/array/mshoai/ADprogressionData/ADNI/data_partitions/")
+  wgs_path = "/data/WGScompletedQC_phenoed.raw",
+  pca_path = "/data/ADNIprunedpostQCPCA.eigenvec",
+  adni_path = "/data/adnimerge.RData",
+  partitions_save_path = "/data/ADNI/data_partitions/")
 ```
 
+We need a R script that runs on each core to execute LMER modelling in parallel.
+`function_to_Rscript` helps to generate an R script from a function in a package or
+source from the local code. This script is designed to run independently on each core.
+To create script we need set:
+
+- `script_name`: the name of the created script.
+- `function_name`: the name of a function in a package or the address of a function's source file.
+- `packages`: list of packages that are loaded in the script.
+- `arguments`: includes function input arguments
+- `arguments_class`: contains a vector of argument types (character, integer, numeric).
 
 ```{r, eval=FALSE}
 function_to_Rscript(
-  script_name = "/data/array/mshoai/ADprogressionData/ADNI/scripts/Parallel_Modeling.R", 
+  script_name = "/scripts/Parallel_Modeling.R", 
   function_from_source = NULL,
   function_name = "lmer_modeling",
   packages =  c("IRISUtils"),
@@ -38,16 +61,36 @@ function_to_Rscript(
 )
 ```
 
+`lmer_modeling` function is written to run LMER model on each data partitions.
+It needs :
+
+- `data_path`: the path of partition data, 
+- `formula`: lmer formula that contains random effect term, 
+- `simulation_name`: is used in the save model file name.
+- `save_model_path`: The directory of saving model output.
+
+Finally we use parallel_rscripts to run scripts on parallel cores.
+The main arguments of function are:
+
+
+- `rscript_path`:	path to the script that is run concurrently.
+- `args`: script's input arguments.
+- `free_memory_treshold`:	upper bound on memory usage percentage
+- `free_cpu_treshold`: upper bound on CPU percentage
+
 ```{r,eval=FALSE}
 library(IRISUtils)
-partitions_files = list.files("/data/array/mshoai/ADprogressionData/ADNI/data_partitions/", full.names = T)
-save_model_path = "/data/array/mshoai/ADprogressionData/ADNI/models/full_model/"
+
+# `lmer_modeling` input arguments
+partitions_files = list.files("/data/data_partitions/", full.names = T)
+save_model_path = "/data/models/"
 formula = paste0("'","MMSE~GENDER+AGE+MMSE.bl+PC1+PC2+PC3+PTEDUCAT+copy_number+(1|PTID)+(1|VISID)","'")
+simulation_name = "full_model"
 
 parallel_rscripts(
-  rscript_path = "/data/array/mshoai/ADprogressionData/ADNI/scripts/Parallel_Modeling.R",
+  rscript_path = "/scripts/Parallel_Modeling.R",
   args = list(data_path = partitions_files,
-              simulation_name = "full_model",
+              simulation_name = simulation_name,
               formula = formula,
               save_model_path = save_model_path),
   free_memory_treshold = 80,
@@ -56,5 +99,14 @@ parallel_rscripts(
 )
 ```
 
+To aggregate models coefficients use `aggregate_lmer_coefficients` function.
+
+```{r, eval=FALSE}
+aggregate_lmer_coefficients(
+  save_model_directory = "/data/models/",
+  model_names_pattern = "full_model",
+  save_model_path = "/data/aggregated_models/"
+)
+```
 
 

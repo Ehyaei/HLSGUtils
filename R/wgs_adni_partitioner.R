@@ -20,7 +20,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 wgs_adno_partitioner <- function(
   partition_number = 300,
   clinical_variables = c("MMSE", "GENDER","AGE", "MMSE.bl", "PTEDUCAT", "PTID", "VISID"),

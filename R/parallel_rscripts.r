@@ -10,7 +10,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 parallel_rscripts <- function(
   rscript_path,
   args,
