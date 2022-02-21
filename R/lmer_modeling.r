@@ -61,8 +61,35 @@ lmer_modeling <- function(
   fitted_model <- model_data %>%
     group_by(snp) %>%
     summarise(coefficients = list(summary(lmerTest::lmer(eval(formula), REML = TRUE))$coefficients))
+
+
+  ############################################################
+  #                                                          #
+  #         Convert Coefficinet Table To Data.Frame          #
+  #                                                          #
+  ############################################################
+
+  # --------------------- #
+  # Run Model
+  summary_to_table <- function(x){
+    as.data.frame(x) %>%
+      mutate(Coefficients = row.names(x)) %>%
+      select(c("Coefficients", "Estimate", "Std. Error", "df", "t value", "Pr(>|t|)"))
+  }
+
+  cbind(
+    data.table(SNP = rep(fitted_model$snp,  rep(nrow(fitted_model$coefficients[1][[1]]), nrow(fitted_model)))),
+    lapply(fitted_model$coefficients, summary_to_table) %>% rbindlist()
+  ) -> total_coefficientes
+
+
+  # -----------------------------
+  # Correct Column Names
+  colnames(total_coefficientes)[4:7] = c("std_error","df","t_value","p_value")
+  total_coefficientes$Coefficients = gsub("\\(|\\)","",  total_coefficientes$Coefficients)
+
   # --------------------- #
   # Save coefficients
-  readr::write_rds(fitted_model,
+  readr::write_rds(total_coefficientes,
                    file = paste0(save_model_path, simulation_name, file_name))
 }

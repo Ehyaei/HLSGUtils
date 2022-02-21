@@ -163,12 +163,12 @@
   free_cpu_treshold <span class="op">=</span> <span class="fl">80</span>,
   sleep_time <span class="op">=</span> <span class="fl">10</span>
 <span class="op">)</span></code></pre></div>
-<p>To aggregate models coefficients use <code>aggregate_lmer_coefficients</code> function.</p>
+<p>To aggregate models coefficients use <code>aggregate_coefficients</code> function.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/aggregate_lmer_coefficients.html">aggregate_lmer_coefficients</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu">aggregate_coefficients</span><span class="op">(</span>
   save_model_directory <span class="op">=</span> <span class="st">"/data/models/"</span>,
   model_names_pattern <span class="op">=</span> <span class="st">"full_model"</span>,
-  save_model_path <span class="op">=</span> <span class="st">"/data/aggregated_models/"</span>
+  save_model_path <span class="op">=</span> <span class="st">"/data/aggregated_models/full_model.rds"</span>
 <span class="op">)</span></code></pre></div>
 </div>
   </div>
