@@ -105,7 +105,7 @@ To aggregate models coefficients use `aggregate_lmer_coefficients` function.
 aggregate_lmer_coefficients(
   save_model_directory = "/data/models/",
   model_names_pattern = "full_model",
-  save_model_path = "/data/aggregated_models/"
+  save_model_path = "/data/aggregated_models/full_model.rds"
 )
 ```
 

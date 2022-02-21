@@ -17,15 +17,16 @@ aggregate_lmer_coefficients <- function(
 
   # -----------------------------
   # Load Libraries
-  library(data.table)
-  library(magrittr)
+  suppressMessages(library(data.table))
+  suppressMessages(library(magrittr))
+  suppressMessages(library(dplyr))
 
   # -----------------------------
   # Define summary functions
   summary_to_table <- function(x){
-    .df <- as.data.table(x)
-    .df[,"Coefficients" := row.names(x)]
-    .df[,c("Coefficients", "Estimate", "Std. Error", "df", "t value", "Pr(>|t|)"), with = F]
+    as.data.table(x) %>%
+      mutate(Coefficients = row.names(x)) %>%
+      select(c("Coefficients", "Estimate", "Std. Error", "df", "t value", "Pr(>|t|)"))
   }
 
   # -----------------------------
@@ -44,7 +45,7 @@ aggregate_lmer_coefficients <- function(
   # -----------------------------
   # Correct Column Names
   colnames(total_coefficientes)[4:7] = c("std_error","df","t_value","p_value")
-  total_coefficientes[,Coefficients:= gsub("\\(|\\)","",Coefficients)]
+  total_coefficientes$Coefficients = gsub("\\(|\\)","",  total_coefficientes$Coefficients)
   # -----------------------------
   # Write Models
   readr::write_rds(total_coefficientes, save_model_path)
