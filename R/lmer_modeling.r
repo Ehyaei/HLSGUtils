@@ -60,7 +60,9 @@ lmer_modeling <- function(
 
   fitted_model <- model_data %>%
     group_by(snp) %>%
-    summarise(coefficients = list(summary(lmerTest::lmer(eval(formula), REML = TRUE))$coefficients))
+    summarise(coefficients = list(summary(lmerTest::lmer(eval(formula), REML = TRUE,
+                                                         control = lmerControl(calc.derivs = FALSE, optimizer = "bobyqa")
+                                                         ))$coefficients))
 
 
   ############################################################
