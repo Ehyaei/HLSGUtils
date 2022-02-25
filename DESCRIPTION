@@ -1,6 +1,6 @@
-Package: IRISUtils
+Package: HLSGUtils
 Type: Package
-Title: This package contains many functions that were used in the UCL IRIS projects.
+Title: This package contains many functions that were used in the Hardy Lab Statistical Genetics projects.
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Ahmad",
@@ -12,7 +12,7 @@ Authors@R:
            role = c("aut"),
            email = "m.shoai@ucl.ac.uk"))
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: The goal of IRISUtils is to collect and organise scripts that are frequently used in our lab projects. 
+Description: The goal of HLSGUtils is to collect and organise scripts that are frequently used in our lab projects. 
 Depends: 
     R (>= 3.4.0)
 Imports: 

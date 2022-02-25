@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(IRISUtils)
+library(HLSGUtils)
 ```
 
 # Mixed Effect Models
@@ -55,7 +55,7 @@ function_to_Rscript(
   script_name = "/scripts/Parallel_Modeling.R", 
   function_from_source = NULL,
   function_name = "lmer_modeling",
-  packages =  c("IRISUtils"),
+  packages =  c("HLSGUtils"),
   arguments = c("data_path", "simulation_name", "formula", "save_model_path"),
   arguments_class = c("character", "character", "character", "character")
 )
@@ -79,7 +79,7 @@ The main arguments of function are:
 - `free_cpu_treshold`: upper bound on CPU percentage
 
 ```{r,eval=FALSE}
-library(IRISUtils)
+library(HLSGUtils)
 
 # `lmer_modeling` input arguments
 partitions_files = list.files("/data/data_partitions/", full.names = T)

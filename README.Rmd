@@ -16,27 +16,27 @@ knitr::opts_chunk$set(
 library("badger", quietly = TRUE)
 ```
 
-<a href={https://github.com/Ehyaei/IRISUtils}><img src="man/figures/IRISUtils.svg" alt="IRISUtils logo" align="right" width="160" style="padding: 0 15px; float: right;"/>
+<a href={https://github.com/Ehyaei/HLSGUtils}><img src="man/figures/HLSGUtils.svg" alt="HLSGUtils logo" align="right" width="160" style="padding: 0 15px; float: right;"/>
 
-# IRISUtils
+# HLSGUtils
 
 ```{r, echo = FALSE, results='asis', message=FALSE,eval=TRUE}
 cat(
-  badger::badge_devel("Ehyaei/IRISUtils", "orange"),
+  badger::badge_devel("Ehyaei/HLSGUtils", "orange"),
   badger::badge_lifecycle("experimental"),
-  badger::badge_last_commit("Ehyaei/IRISUtils")
+  badger::badge_last_commit("Ehyaei/HLSGUtils")
 )
 ```
 
-The goal of IRISUtils is to collect and organise scripts that are frequently used in our lab projects.
+The goal of HLSGUtils is to collect and organise scripts that are frequently used in our lab projects.
 
 ## Installation
 
-You can install the development version of IRISUtils like so:
+You can install the development version of HLSGUtils like so:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("Ehyaei/IRISUtils")
+remotes::install_github("Ehyaei/HLSGUtils")
 ```
 
 

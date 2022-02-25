@@ -1,9 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<a href={https://github.com/Ehyaei/HLSGUtils}><img src="man/figures/IRISUtils.svg" alt="IRISUtils logo" align="right" width="160" style="padding: 0 15px; float: right;"/>
+<a href={https://github.com/Ehyaei/HLSGUtils}><img src="man/figures/HLSGUtils.svg" alt="HLSGUtils logo" align="right" width="160" style="padding: 0 15px; float: right;"/>
 
-# IRISUtils
+# HLSGUtils
 
 [![](https://img.shields.io/badge/devel%20version-0.1.0-orange.svg)](https://github.com/Ehyaei/HLSGUtils)
 [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -14,7 +14,7 @@ frequently used in our lab projects.
 
 ## Installation
 
-You can install the development version of IRISUtils like so:
+You can install the development version of HLSGUtils like so:
 
 ``` r
 # install.packages("remotes")
