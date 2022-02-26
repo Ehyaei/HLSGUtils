@@ -39,6 +39,7 @@ wgs_adno_partitioner <- function(
 
   suppressMessages(library(data.table))
   suppressMessages(library(magrittr))
+  suppressMessages(library(dplyr))
 
   ############################################################
   #                                                          #
@@ -86,9 +87,8 @@ wgs_adno_partitioner <- function(
   # --------------------- #
   # Read Genetics Data
   print("Load WGS Data...")
-  snp_data <- fread(wgs_path) %>%
-    .[, "PTID" := as.character(IID)] %>%
-    .[,IID:= NULL]
+  snp_data <- fread(wgs_path)
+  setnames(snp_data,old = "IID", new = "PTID")
 
   # --------------------- #
   # Create SNP Names vector
