@@ -137,7 +137,8 @@ wgs_adno_partitioner <- function(
            variable.name = "snp", value.name = "copy_number",
            measure.vars = snp_cases) %>%
       fwrite(file = paste0(partitions_save_path,"partition_", partition_number,
-                           "_",(breaks[i]+1), "_to_", min(breaks[i+1], snp_length),".csv"))
+                           "_",(breaks[i]+1), "_to_", min(breaks[i+1], snp_length),".gz"),
+             compress = "gzip")
     setTxtProgressBar(pb, i)
   }
 }
