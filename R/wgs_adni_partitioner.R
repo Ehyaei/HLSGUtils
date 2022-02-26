@@ -98,7 +98,8 @@ wgs_adno_partitioner <- function(
   # --------------------- #
   # Remove clinical columns from WGS data
   remove_columns <- setdiff(colnames(snp_data), c(snp_names, "PTID"))
-  snp_data[,(remove_columns):= NULL]
+  snp_data = snp_data[,c("PTID", snp_names), with = FALSE]
+  # snp_data[,(remove_columns):= NULL]
 
   # --------------------- #
   # Add Clinical Data to SNP data
