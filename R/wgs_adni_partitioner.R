@@ -64,14 +64,13 @@ wgs_adno_partitioner <- function(
   # Drop NA rows and create data.table
   print("Load ADNI Data...")
   adnimerge <- adnimerge %>%
+    mutate(
+      GENDER  = as.factor(GENDER),
+      AGE = as.numeric(AGE),
+      VISID = as.character(VISID)) %>%
     dplyr::select(clinical_variables) %>%
     tidyr::drop_na() %>%
-    as.data.table() %>%
-    .[,c("GENDER", "AGE", "VISID"):= .(
-      as.factor(GENDER),
-      as.numeric(AGE),
-      as.character(VISID)
-    )]
+    as.data.table()
 
   # --------------------- #
   # Load PCA Data
