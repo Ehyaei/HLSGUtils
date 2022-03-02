@@ -58,7 +58,7 @@ wgs_adno_partitioner <- function(
     adnimerge <- adnimerge %>%
       arrange(AGE) %>%
       group_by(PTID) %>%
-      tidyr::fill(fill_col)
+      tidyr::fill(fill_col, direction = "down")
   }
 
   # --------------------- #

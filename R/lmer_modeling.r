@@ -57,7 +57,7 @@ lmer_modeling <- function(
 
   # --------------------- #
   # Run Model
-
+   set.seed(1)
   fitted_model <- model_data %>%
     group_by(snp) %>%
     summarise(coefficients = list(summary(lmerTest::lmer(eval(formula), REML = TRUE,
