@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Suppose we want to run different linear models on a dataset. We can write it with a for loop in R, but as a result of many R functions working with one core, this process, It will eventually run on one core and is time-consuming. Another solution is to use parallel packages in R, like parallel. This package is very good, but the time of the executions does not decrease linearly when we increase the computation cores. One solution is that we run our code in parallel in different R sessions manually, like the Job option in Rstudio. At first glance, this idea is hard to implement because we need to have different R scripts and run them simultaneously. The `HLSGUtils` package provides some functions to make this work simpler with dynamic system resource management of memory and thread options.
+Suppose we want to run different linear models on a dataset. We can write it with a for loop in R, but as a result of many R functions working with one core, this process, It will eventually run on one core and is time-consuming. Another solution is to use multiprocess packages in R, like `parallel`. These packages are very good, but the time of the executions does not decrease linearly when we increase the computation cores. One solution is that we run our code in parallel in different R sessions manually, like the `Jobs` option in Rstudio. At first glance, this idea is hard to implement because we need to have different R scripts and run them simultaneously. The `HLSGUtils` package provides some functions to make this work simpler with dynamic system resource management of memory and thread options.
 
 We will try to describe parallelization in `HLGSUtils` step-by-step. First, we need a base script that we want to run concurrently. A simple example is shown below.
 
@@ -22,7 +22,9 @@ linear_fitter <- function(formula, n){
     x2 = rnorm(n),
     x3 = rnorm(n)
     )
+  
   fit <- lm(as.formula(formula), data = df)
+  
   write_rds(broom::tidy(fit),sprintf("~/Desktop/fittel_lm_%s.rds",n))
   print(sprintf("%s modeling was done with %s samples!", formula, n))
 }
@@ -30,14 +32,14 @@ linear_fitter <- function(formula, n){
 
 Save the script in some path like `~/Desktop/modeling.R`
 `linear_fitter` is only run in the R environment. We need to convert this function that is run from the command line.
-`function_to_Rscript` convert function to command line format. This function needs:
+`function_to_Rscript` converts function to command line format. This function needs:
 
-- `function_from_source`: The path of the saved R function.
-- `function_name`: Name of the function called in the R script.
-- `packages`: The packages that are needed to to call.
-- `arguments`: Names of function arguments.
-- `arguments_class`: Classes Type of function arguments.
-- `script_save_path`: The generated R script path.
+- `function_from_source`: The path of the saved R function
+- `function_name`: The name of the function in the source file
+- `packages`: The packages that are needed to be called
+- `arguments`: Names of function arguments
+- `arguments_class`: arguments function class types
+- `script_save_path`: The generated R script path
 
 ```{r, eval=FALSE, echo=TRUE}
 library(HLSGUtils)
@@ -80,7 +82,8 @@ n = n
 )
 ```
 
-`modeling_r_script.R` can be run in command line format by `Rscript --vanilla` command.
+`modeling_r_script.R` can be run in command line format by `Rscript --vanilla` command
+and set input arguments.
 
 ```{bash}
 Rscript --vanilla ~/Desktop/modeling_r_script.R y~x1 100
@@ -92,12 +95,12 @@ After running the command, the result table is:
 readr::read_rds("~/Desktop/fittel_lm_100.rds")
 ```
 
-Finally, we want to run multiple models in parallel. `parallel_rscripts` allows you to run R command line functions in parallel.It needs to set input variables and system resource management thresholds.
+Finally, we want to run multiple models in parallel. `parallel_rscripts` allows you to run R command line functions in parallel. It needs to set input arguments and system resource management thresholds.
 
 - `rscript_path`: The path of command line format script
 - `args`: list of function arguments
-- `used_memory_treshold`: The total percentage of the system's used memory for computation.
-- `used_cpu_treshold`: The total percentage of the thread's used memory for computation.
+- `used_memory_treshold`: The total percentage of system memory that is in use.
+- `used_cpu_treshold`: The total percentage of threads that is in use.
 - `sleep_time`: sleep time between two work in seconds
 
 ```{r, echo=TRUE, eval=FALSE}
