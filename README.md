@@ -14,7 +14,21 @@ frequently used in our lab projects.
 
 ## Installation
 
-You can install the development version of HLSGUtils like so:
+To install `HLSGUtils` package, first you need to install the Python
+environment package in R.
+
+``` r
+install.packages("reticulate")
+```
+
+After that we need `psutil` python package to control system resources.
+
+``` r
+library(reticulate)
+py_install("psutil")
+```
+
+Now you can install the development version of `HLSGUtils` like so:
 
 ``` r
 # install.packages("remotes")

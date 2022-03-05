@@ -7,8 +7,8 @@
 parallel_rscripts(
   rscript_path,
   args,
-  free_memory_treshold = 75,
-  free_cpu_treshold = 75,
+  used_memory_treshold = 75,
+  used_cpu_treshold = 75,
   sleep_time = 10,
   swap = 8,
   process = F
@@ -19,9 +19,9 @@ parallel_rscripts(
 
 \item{args}{input arguments of rscript.}
 
-\item{free_memory_treshold}{upper bound for memory usage}
+\item{used_memory_treshold}{upper bound for memory usage}
 
-\item{free_cpu_treshold}{upper bound for CPU usage}
+\item{used_cpu_treshold}{upper bound for CPU usage}
 
 \item{sleep_time}{sleep time between two jobs in seconds}
 

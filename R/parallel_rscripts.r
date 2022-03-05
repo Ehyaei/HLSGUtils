@@ -2,8 +2,8 @@
 #'
 #' @param rscript_path path of rscript.
 #' @param args input arguments of rscript.
-#' @param free_memory_treshold upper bound for memory usage
-#' @param free_cpu_treshold upper bound for CPU usage
+#' @param used_memory_treshold upper bound for memory usage
+#' @param used_cpu_treshold upper bound for CPU usage
 #' @param sleep_time sleep time between two jobs in seconds
 #' @param swap server swap memory in GB
 #' @param process Boolean variable to see function messages
@@ -14,8 +14,8 @@
 parallel_rscripts <- function(
   rscript_path,
   args,
-  free_memory_treshold = 75,
-  free_cpu_treshold = 75,
+  used_memory_treshold = 75,
+  used_cpu_treshold = 75,
   sleep_time = 10,
   swap = 8,
   process = F
@@ -65,7 +65,7 @@ parallel_rscripts <- function(
     swap_memory <- 100*(psutil$swap_memory()["used"]/(swap*1024*1024*1024))
 
 
-    while(virtual_memory > free_memory_treshold  | cpu_percent > free_cpu_treshold){
+    while(virtual_memory > used_memory_treshold  | cpu_percent > used_cpu_treshold){
       # ----------------------------
       # If Swap is filled Kill all Process
       if(swap_memory > 95){system("pkill -u mshoai")}

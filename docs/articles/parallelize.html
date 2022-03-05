@@ -81,10 +81,9 @@
 
     
     
+<p>Suppose we want to run different linear models on a dataset. We can write it with a for loop in R, but as a result of many R functions working with one core, this process, It will eventually run on one core and is time-consuming. Another solution is to use parallel packages in R, like parallel. This package is very good, but the time of the executions does not decrease linearly when we increase the computation cores. One solution is that we run our code in parallel in different R sessions manually, like the Job option in Rstudio. At first glance, this idea is hard to implement because we need to have different R scripts and run them simultaneously. The <code>HLSGUtils</code> package provides some functions to make this work simpler with dynamic system resource management of memory and thread options.</p>
+<p>We will try to describe parallelization in <code>HLGSUtils</code> step-by-step. First, we need a base script that we want to run concurrently. A simple example is shown below.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">HLSGUtils</span><span class="op">)</span></code></pre></div>
-<p><code>~/Desktop/modeling.R</code></p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linear_fitter</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">formula</span>, <span class="va">n</span><span class="op">)</span><span class="op">{</span>
   <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
     y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,
@@ -96,16 +95,34 @@
   <span class="fu">write_rds</span><span class="op">(</span><span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"~/Desktop/fittel_lm_%s.rds"</span>,<span class="va">n</span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s modeling was done with %s samples!"</span>, <span class="va">formula</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/function_to_Rscript.html">function_to_Rscript</a></span><span class="op">(</span>
+<p>Save the script in some path like <code>~/Desktop/modeling.R</code> <code>linear_fitter</code> is only run in the R environment. We need to convert this function that is run from the command line. <code>function_to_Rscript</code> convert function to command line format. This function needs:</p>
+<ul>
+<li>
+<code>function_from_source</code>: The path of the saved R function.</li>
+<li>
+<code>function_name</code>: Name of the function called in the R script.</li>
+<li>
+<code>packages</code>: The packages that are needed to to call.</li>
+<li>
+<code>arguments</code>: Names of function arguments.</li>
+<li>
+<code>arguments_class</code>: Classes Type of function arguments.</li>
+<li>
+<code>script_save_path</code>: The generated R script path.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">HLSGUtils</span><span class="op">)</span>
+
+<span class="fu"><a href="../reference/function_to_Rscript.html">function_to_Rscript</a></span><span class="op">(</span>
   function_from_source <span class="op">=</span> <span class="st">"~/Desktop/modeling.R"</span>,
   function_name <span class="op">=</span> <span class="st">"linear_fitter"</span>, 
   packages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"readr"</span>,<span class="st">"broom"</span><span class="op">)</span>,
   arguments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>,<span class="st">"n"</span><span class="op">)</span>,
-  arguments_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"character"</span>,<span class="st">"integer"</span><span class="op">)</span>,
+  arguments_class  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"character"</span>,<span class="st">"integer"</span><span class="op">)</span>,
   script_save_path <span class="op">=</span> <span class="st">"~/Desktop/modeling_r_script.R"</span>
   <span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>The resulted script is ready to run on the command line. The converted code can be found below.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">############################################################</span>
 <span class="co">#                      linear_fitter                       #</span>
 <span class="co">############################################################</span>
@@ -128,23 +145,38 @@
 formula <span class="op">=</span> <span class="va">formula</span>,
 n <span class="op">=</span> <span class="va">n</span>
 <span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">--vanilla</span> ~/Desktop/modeling_r_script.R y~x1 100</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "y~x1 modeling was done with 100 samples!"</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p><code>modeling_r_script.R</code> can be run in command line format by <code>Rscript --vanilla</code> command.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">--vanilla</span> ~/Desktop/modeling_r_script.R y~x1 100</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "y~x1 modeling was done with 100 samples!"</span></span></code></pre></div>
+<p>After running the command, the result table is:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">read_rds</a></span><span class="op">(</span><span class="st">"~/Desktop/fittel_lm_100.rds"</span><span class="op">)</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 5</span></span>
 <span class="co">#&gt;   term        estimate std.error statistic  p.value</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (Intercept)    3.11     0.096<span style="text-decoration: underline;">5</span>     32.2  6.65<span style="color: #949494;">e</span><span style="color: #BB0000;">-54</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> x1            -<span style="color: #BB0000;">0.159</span>    0.096<span style="text-decoration: underline;">9</span>     -<span style="color: #BB0000;">1.64</span> 1.05<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sample_size</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fl">200</span>,<span class="fl">300</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (Intercept)   2.89      0.092<span style="text-decoration: underline;">4</span>     31.3  8.41<span style="color: #949494;">e</span><span style="color: #BB0000;">-53</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> x1           -<span style="color: #BB0000;">0.084</span><span style="color: #BB0000; text-decoration: underline;">6</span>    0.079<span style="text-decoration: underline;">2</span>     -<span style="color: #BB0000;">1.07</span> 2.88<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span></span></code></pre></div>
+<p>Finally, we want to run multiple models in parallel. <code>parallel_rscripts</code> allows you to run R command line functions in parallel.It needs to set input variables and system resource management thresholds.</p>
+<ul>
+<li>
+<code>rscript_path</code>: The path of command line format script</li>
+<li>
+<code>args</code>: list of function arguments</li>
+<li>
+<code>used_memory_treshold</code>: The total percentage of the system’s used memory for computation.</li>
+<li>
+<code>used_cpu_treshold</code>: The total percentage of the thread’s used memory for computation.</li>
+<li>
+<code>sleep_time</code>: sleep time between two work in seconds</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sample_size</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">300</span><span class="op">)</span>
 <span class="va">formulas</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y~x1"</span>, <span class="st">"y~x1+x2"</span>, <span class="st">"y~x1+x2+x3"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/parallel_rscripts.html">parallel_rscripts</a></span><span class="op">(</span>
   rscript_path <span class="op">=</span> <span class="st">"~/Desktop/modeling_r_script.R"</span>,
   args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">formulas</span>, n <span class="op">=</span> <span class="va">sample_size</span><span class="op">)</span>,
-  free_memory_treshold <span class="op">=</span> <span class="fl">80</span>,
-  free_cpu_treshold <span class="op">=</span> <span class="fl">80</span>,
+  used_memory_treshold <span class="op">=</span> <span class="fl">80</span>,
+  used_cpu_treshold <span class="op">=</span> <span class="fl">80</span>,
   sleep_time <span class="op">=</span> <span class="fl">5</span> <span class="op">)</span></code></pre></div>
   </div>
 

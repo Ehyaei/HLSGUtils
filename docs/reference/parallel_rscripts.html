@@ -60,8 +60,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">parallel_rscripts</span><span class="op">(</span>
   <span class="va">rscript_path</span>,
   <span class="va">args</span>,
-  free_memory_treshold <span class="op">=</span> <span class="fl">75</span>,
-  free_cpu_treshold <span class="op">=</span> <span class="fl">75</span>,
+  used_memory_treshold <span class="op">=</span> <span class="fl">75</span>,
+  used_cpu_treshold <span class="op">=</span> <span class="fl">75</span>,
   sleep_time <span class="op">=</span> <span class="fl">10</span>,
   swap <span class="op">=</span> <span class="fl">8</span>,
   process <span class="op">=</span> <span class="cn">F</span>
@@ -74,9 +74,9 @@
 <dd><p>path of rscript.</p></dd>
 <dt>args</dt>
 <dd><p>input arguments of rscript.</p></dd>
-<dt>free_memory_treshold</dt>
+<dt>used_memory_treshold</dt>
 <dd><p>upper bound for memory usage</p></dd>
-<dt>free_cpu_treshold</dt>
+<dt>used_cpu_treshold</dt>
 <dd><p>upper bound for CPU usage</p></dd>
 <dt>sleep_time</dt>
 <dd><p>sleep time between two jobs in seconds</p></dd>

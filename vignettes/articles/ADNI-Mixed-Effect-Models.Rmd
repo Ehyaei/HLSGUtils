@@ -53,8 +53,7 @@ To create script we need set:
 ```{r, eval=FALSE}
 function_to_Rscript(
   script_name = "/scripts/Parallel_Modeling.R", 
-  function_from_source = NULL,
-  function_name = "lmer_modeling",
+  function_from_package = "lmer_modeling",
   packages =  c("HLSGUtils"),
   arguments = c("data_path", "simulation_name", "formula", "save_model_path"),
   arguments_class = c("character", "character", "character", "character")
@@ -93,8 +92,8 @@ parallel_rscripts(
               simulation_name = simulation_name,
               formula = formula,
               save_model_path = save_model_path),
-  free_memory_treshold = 80,
-  free_cpu_treshold = 80,
+  used_memory_treshold = 80,
+  used_cpu_treshold = 80,
   sleep_time = 10
 )
 ```
