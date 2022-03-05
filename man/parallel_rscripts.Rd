@@ -10,7 +10,8 @@ parallel_rscripts(
   free_memory_treshold = 75,
   free_cpu_treshold = 75,
   sleep_time = 10,
-  swap = 8
+  swap = 8,
+  process = F
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ parallel_rscripts(
 \item{sleep_time}{sleep time between two jobs in seconds}
 
 \item{swap}{server swap memory in GB}
+
+\item{process}{Boolean variable to see function messages}
 }
 \value{
 

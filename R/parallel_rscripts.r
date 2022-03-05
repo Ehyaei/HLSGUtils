@@ -6,6 +6,7 @@
 #' @param free_cpu_treshold upper bound for CPU usage
 #' @param sleep_time sleep time between two jobs in seconds
 #' @param swap server swap memory in GB
+#' @param process Boolean variable to see function messages
 #'
 #' @return
 #' @export
@@ -16,7 +17,8 @@ parallel_rscripts <- function(
   free_memory_treshold = 75,
   free_cpu_treshold = 75,
   sleep_time = 10,
-  swap = 8
+  swap = 8,
+  process = F
 ){
 
   # ----------------------------
@@ -26,8 +28,10 @@ parallel_rscripts <- function(
 
   # ----------------------------- #
   # Turn off warning and messages
-  options(warn=-1)
-  options(message=-1)
+  if(process){
+    options(warn=-1)
+    options(message=-1)
+  }
 
 
   # ----------------------------
@@ -80,5 +84,5 @@ parallel_rscripts <- function(
     Sys.sleep(sleep_time)
     setTxtProgressBar(pb, i)
   }
-  print(paste("Parallel Task Duration: ", round(Sys.time() - start_time,2)))
+  cat(paste("\n Parallel Task Duration: ", round(Sys.time() - start_time,2)))
 }

@@ -34,6 +34,9 @@
   <ul class="dropdown-menu" role="menu"><li>
       <a href="../articles/ADNI-Mixed-Effect-Models.html">ADNI Mixed Effect Models</a>
     </li>
+    <li>
+      <a href="../articles/parallelize.html">How to parrallelize R functions with HLSGUtils package?</a>
+    </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -60,7 +63,8 @@
   free_memory_treshold <span class="op">=</span> <span class="fl">75</span>,
   free_cpu_treshold <span class="op">=</span> <span class="fl">75</span>,
   sleep_time <span class="op">=</span> <span class="fl">10</span>,
-  swap <span class="op">=</span> <span class="fl">8</span>
+  swap <span class="op">=</span> <span class="fl">8</span>,
+  process <span class="op">=</span> <span class="cn">F</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -78,6 +82,8 @@
 <dd><p>sleep time between two jobs in seconds</p></dd>
 <dt>swap</dt>
 <dd><p>server swap memory in GB</p></dd>
+<dt>process</dt>
+<dd><p>Boolean variable to see function messages</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

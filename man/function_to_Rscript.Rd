@@ -5,26 +5,29 @@
 \title{Convert R Functions to Scripts that are given arguments from the Console}
 \usage{
 function_to_Rscript(
-  script_name = "Parallel_Modeling.R",
   function_from_source = NULL,
-  function_name = "lmer_modeling",
-  packages = c("IRISUtils"),
-  arguments = c("data_path", "simulation_name", "formula", "save_model_path"),
-  arguments_class = c("character", "character", "character", "character")
+  function_name = NULL,
+  function_from_package = NULL,
+  packages = c("tidyverse"),
+  arguments,
+  arguments_class,
+  script_save_path
 )
 }
 \arguments{
-\item{script_name}{path of generated script.}
-
 \item{function_from_source}{the path of function that add function from source.}
 
-\item{function_name}{name of function to run in script.}
+\item{function_name}{name of function to run that is defined in R source file.}
+
+\item{function_from_package}{name of function to run in script.}
 
 \item{packages}{A vector of package names that have been loaded into the script.}
 
 \item{arguments}{A vector of arguments are given from console.}
 
 \item{arguments_class}{A vector of input arguments types.}
+
+\item{script_save_path}{path of generated script.}
 }
 \value{
 

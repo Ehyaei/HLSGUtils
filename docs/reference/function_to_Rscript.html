@@ -34,6 +34,9 @@
   <ul class="dropdown-menu" role="menu"><li>
       <a href="../articles/ADNI-Mixed-Effect-Models.html">ADNI Mixed Effect Models</a>
     </li>
+    <li>
+      <a href="../articles/parallelize.html">How to parrallelize R functions with HLSGUtils package?</a>
+    </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -55,22 +58,23 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">function_to_Rscript</span><span class="op">(</span>
-  script_name <span class="op">=</span> <span class="st">"Parallel_Modeling.R"</span>,
   function_from_source <span class="op">=</span> <span class="cn">NULL</span>,
-  function_name <span class="op">=</span> <span class="st">"lmer_modeling"</span>,
-  packages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IRISUtils"</span><span class="op">)</span>,
-  arguments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data_path"</span>, <span class="st">"simulation_name"</span>, <span class="st">"formula"</span>, <span class="st">"save_model_path"</span><span class="op">)</span>,
-  arguments_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"character"</span>, <span class="st">"character"</span>, <span class="st">"character"</span>, <span class="st">"character"</span><span class="op">)</span>
+  function_name <span class="op">=</span> <span class="cn">NULL</span>,
+  function_from_package <span class="op">=</span> <span class="cn">NULL</span>,
+  packages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span>,
+  <span class="va">arguments</span>,
+  <span class="va">arguments_class</span>,
+  <span class="va">script_save_path</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>script_name</dt>
-<dd><p>path of generated script.</p></dd>
-<dt>function_from_source</dt>
+    <dl><dt>function_from_source</dt>
 <dd><p>the path of function that add function from source.</p></dd>
 <dt>function_name</dt>
+<dd><p>name of function to run that is defined in R source file.</p></dd>
+<dt>function_from_package</dt>
 <dd><p>name of function to run in script.</p></dd>
 <dt>packages</dt>
 <dd><p>A vector of package names that have been loaded into the script.</p></dd>
@@ -78,6 +82,8 @@
 <dd><p>A vector of arguments are given from console.</p></dd>
 <dt>arguments_class</dt>
 <dd><p>A vector of input arguments types.</p></dd>
+<dt>script_save_path</dt>
+<dd><p>path of generated script.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
