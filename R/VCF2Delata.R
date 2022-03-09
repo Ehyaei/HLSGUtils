@@ -22,6 +22,7 @@ VCF2Delta <- function(vcfPath, savePath, cores = 4){
   command = paste(spark_submit,
                   "--class \"io.hlsg.utils.VCF2Delta\"",
                   sprintf("--master local[%s]", cores),
+                  "--driver-java-options=\"-Droot.logger=ERROR,console\"",
                   load_libraries,
                   jar_path,
                   "-v", vcfPath,
