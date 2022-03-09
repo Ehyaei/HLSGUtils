@@ -1,0 +1,31 @@
+---
+title: "How to use GenomicsUtils' Scala Classes in R?"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(HLSGUtils)
+```
+
+```{bash}
+export SPARK_HOME="/opt/spark"
+echo $SPARK_HOME
+```
+
+
+
+```{r}
+Sys.setenv(SPARK_HOME = "/opt/spark")
+Sys.getenv("SPARK_HOME")
+```
+
+```{r}
+system.file("jars", package = "HLSGUtils")
+```
+

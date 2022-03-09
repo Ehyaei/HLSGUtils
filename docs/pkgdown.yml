@@ -3,6 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   ADNI-Mixed-Effect-Models: ADNI-Mixed-Effect-Models.html
+  genomicsUtils: genomicsUtils.html
   parallelize: parallelize.html
-last_built: 2022-03-05T12:49Z
+last_built: 2022-03-09T15:08Z
 

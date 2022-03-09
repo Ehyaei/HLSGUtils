@@ -53,6 +53,9 @@
       <a href="../articles/ADNI-Mixed-Effect-Models.html">ADNI Mixed Effect Models</a>
     </li>
     <li>
+      <a href="../articles/genomicsUtils.html">How to use GenomicsUtils' Scala Classes in R?</a>
+    </li>
+    <li>
       <a href="../articles/parallelize.html">How to parrallelize R functions with HLSGUtils package?</a>
     </li>
   </ul>
@@ -156,8 +159,8 @@ n <span class="op">=</span> <span class="va">n</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 5</span></span>
 <span class="co">#&gt;   term        estimate std.error statistic  p.value</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (Intercept)   2.92       0.109    26.8   6.24<span style="color: #949494;">e</span><span style="color: #BB0000;">-47</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> x1           -<span style="color: #BB0000;">0.043</span><span style="color: #BB0000; text-decoration: underline;">8</span>     0.117    -<span style="color: #BB0000;">0.376</span> 7.08<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span></span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (Intercept)   3.01      0.097<span style="text-decoration: underline;">8</span>    30.7   4.03<span style="color: #949494;">e</span><span style="color: #BB0000;">-52</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> x1            0.044<span style="text-decoration: underline;">2</span>    0.099<span style="text-decoration: underline;">4</span>     0.445 6.57<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span></span></code></pre></div>
 <p>Finally, we want to run multiple models in parallel. <code>parallel_rscripts</code> allows you to run R command line functions in parallel. It needs to set input arguments and system resource management thresholds.</p>
 <ul>
 <li>
