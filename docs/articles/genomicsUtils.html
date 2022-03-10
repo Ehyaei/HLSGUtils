@@ -84,18 +84,66 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">HLSGUtils</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SPARK_HOME</span><span class="op">=</span><span class="st">"/opt/spark"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$SPARK_HOME</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; /opt/spark</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p><code>HLSGUtils</code> contains functions that can run the objects of the <a href="https://github.com/Hardy-Lab-Statistical-Genetics/GenomicsUtils" class="external-link">GenomicsUtils</a> Scala project. This function opens a Spark session and runs a Scala class with input arguments that are given from the R function. First, we need to have <a href="https://spark.apache.org/" class="external-link">Apache Spark</a> on our machine. <code>GenomicsUtils</code> is based on Spark version of 3.1.2 and Hadoop 2.7. This <a href="https://spark.apache.org/downloads.html" class="external-link">page</a> helps Choose your version and download the source.</p>
+<p>On Linux, downloading and extracting Spark source files are done by these commands.:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://www.apache.org/dyn/closer.lua/spark/spark-3.1.3/spark-3.1.3-bin-hadoop2.7.tgz</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xvf spark-3.1.3-bin-hadoop2.7.tgz</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> spark-3.1.3-bin-hadoop2.7 /opt/spark </span></code></pre></div>
+<p>Insert the following line into the <code>/.bashrc</code> file to add the spark software file location to the PATH variable.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>export PATH=$PATH:/opt/spark/bin</span></code></pre></div>
+<p>To active new setting, use the following command for sourcing the <code>~/.bashrc</code> file.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div>
+<p>It is also necessary to define <code>SPARK_HOME</code> in system.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SPARK_HOME</span><span class="op">=</span><span class="st">"/opt/spark"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$SPARK_HOME</span> <span class="co">#! check result</span></span></code></pre></div>
+<p>To see environments variables we can also use R command:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>SPARK_HOME <span class="op">=</span> <span class="st">"/opt/spark"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"SPARK_HOME"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "/opt/spark"</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"jars"</span>, package <span class="op">=</span> <span class="st">"HLSGUtils"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "/tmp/Rtmp4cBtkh/temp_libpath5943c38fa4dec/HLSGUtils/jars"</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"SPARK_HOME"</span><span class="op">)</span></code></pre></div>
+<p>Run the following command to see if everything is working properly:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">spark</span><span class="op">-</span><span class="va">shell</span></code></pre></div>
+<p>If Spark is active on your system, then we can run a Spark-based <code>HLSGUtils</code> functions. <code>VCF2Delta</code> reads VCF files and converts them to <a href="VCF2Delta">delta</a> format .</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">HLSGUtils</span><span class="op">)</span>
+<span class="va">vcf_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"1KG_SNP_chr19.vcf.gz"</span>, package <span class="op">=</span> <span class="st">"HLSGUtils"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/VCF2Delta.html">VCF2Delta</a></span><span class="op">(</span><span class="va">vcf_file</span>, savePath <span class="op">=</span> <span class="st">"~/Desktop/1KG_SNP_chr19.delta"</span><span class="op">)</span></code></pre></div>
+<p>The <code>sparklyr</code> package can read delta files, as shown in the code below.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://spark.rstudio.com/" class="external-link">sparklyr</a></span><span class="op">)</span>
+<span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sparklyr/man/spark-connections.html" class="external-link">spark_connect</a></span><span class="op">(</span>master <span class="op">=</span> <span class="st">"local"</span>, packages <span class="op">=</span> <span class="st">"io.delta:delta-core_2.12:1.0.1"</span><span class="op">)</span>
+<span class="va">snp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sparklyr/man/spark_read_delta.html" class="external-link">spark_read_delta</a></span><span class="op">(</span><span class="va">sc</span>, <span class="st">"~/Desktop/1KG_SNP_chr19.delta"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">snp</span><span class="op">)</span></code></pre></div>
+<p><code>CSVJoinDelta</code> is Another useful function in <code>GenomicsUtils</code> library. It is used to join CSV files with datasets that are stored as delta format.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">csv_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"1KG_p_value.csv"</span>, package <span class="op">=</span> <span class="st">"HLSGUtils"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/CSVJoinDelta.html">CSVJoinDelta</a></span><span class="op">(</span>csvPath <span class="op">=</span> <span class="va">csv_path</span>, deltaPath <span class="op">=</span> <span class="st">"~/Desktop/1KG_SNP_chr19.delta"</span>,
+             byX <span class="op">=</span> <span class="st">"ID"</span>, byY <span class="op">=</span> <span class="st">"names"</span>, 
+             savePath <span class="op">=</span> <span class="st">"~/Desktop/1KG_SNP_chr19_pvalue.csv"</span>
+             <span class="op">)</span></code></pre></div>
+<p>The final result is:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">read_csv</span><span class="op">(</span><span class="st">"~/Desktop/1KG_SNP_chr19_pvalue.csv/part-00000-2c471c7c-e42e-4943-8afc-637c18b6254c-c000.csv"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/sparklyr/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">939</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">9</span></span>
+<span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span>
+<span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> ","</span>
+<span class="co">#&gt; <span style="color: #BB0000;">chr</span> (3): ID, names, referenceAllele</span>
+<span class="co">#&gt; <span style="color: #00BB00;">dbl</span> (5): p_value, contigName, start, end, qual</span>
+<span class="co">#&gt; <span style="color: #BBBB00;">lgl</span> (1): splitFromMultiAllelic</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 9</span></span>
+<span class="co">#&gt;   ID          p_value contigName  start    end names       referenceAllele  qual</span>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> rs114256401   0.299         19 <span style="text-decoration: underline;">275</span>198 <span style="text-decoration: underline;">275</span>199 rs114256401 C                 100</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> rs143060471   0.201         19 <span style="text-decoration: underline;">330</span>327 <span style="text-decoration: underline;">330</span>328 rs143060471 C                 100</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> rs139380406   0.277         19 <span style="text-decoration: underline;">340</span>354 <span style="text-decoration: underline;">340</span>355 rs139380406 T                 100</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> rs143987486   0.948         19 <span style="text-decoration: underline;">358</span>004 <span style="text-decoration: underline;">358</span>005 rs143987486 G                 100</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> rs4919869     0.702         19 <span style="text-decoration: underline;">450</span>179 <span style="text-decoration: underline;">450</span>180 rs4919869   G                 100</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> rs8104683     0.820         19 <span style="text-decoration: underline;">458</span>934 <span style="text-decoration: underline;">458</span>935 rs8104683   A                 100</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 1 more variable: splitFromMultiAllelic &lt;lgl&gt;</span></span></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
