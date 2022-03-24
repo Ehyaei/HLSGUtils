@@ -62,11 +62,15 @@ gwas_lmer_modeling <- function(
 
   geno_to_coef = function(x){
     tryCatch({
-      suppressMessages(summary(update(fit, eval(paste(". ~ . +",x))))$coefficients) %>%
-        as_tibble() %>% slice(n()) %>%
+      suppressMessages({
+        summary(lmerTest::lmer(eval(paste(formula,"+",x)), REML = TRUE,data = model_data,
+                               control = lmerControl(calc.derivs = FALSE, optimizer = "bobyqa")))$coefficients
+      }) %>%
+        .[x,] %>%
+        as.data.frame.list() %>%
         mutate(SNP = x) %>%
-        select("SNP", "Estimate", std = "Std. Error", "df",
-               t_value = "t value", p_value = "Pr(>|t|)")
+        select("SNP", "Estimate", std = "Std..Error", "df",
+               t_value = "t.value", p_value = "Pr...t..")
     },
     error = function(e){return(NULL)}
     )
