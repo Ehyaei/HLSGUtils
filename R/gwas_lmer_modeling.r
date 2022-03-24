@@ -13,7 +13,7 @@
 #' @return
 #' @export
 #'
-lmer_modeling <- function(
+gwas_lmer_modeling <- function(
   data_path,
   simulation_name,
   formula ,
@@ -63,7 +63,7 @@ lmer_modeling <- function(
   geno_to_coef = function(x){
     tryCatch({
       summary(update(fit, eval(paste(". ~ . +",x))))$coefficients %>%
-        as.data.table() %>% last() %>%
+        as_tibble() %>% slice(n()) %>%
         mutate(SNP = x) %>%
         select("SNP", "Estimate", std = "Std. Error", "df",
                t_value = "t value", p_value = "Pr(>|t|)")
