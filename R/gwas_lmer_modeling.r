@@ -62,7 +62,7 @@ gwas_lmer_modeling <- function(
 
   geno_to_coef = function(x){
     tryCatch({
-      summary(update(fit, eval(paste(". ~ . +",x))))$coefficients %>%
+      suppressMessages(summary(update(fit, eval(paste(". ~ . +",x))))$coefficients) %>%
         as_tibble() %>% slice(n()) %>%
         mutate(SNP = x) %>%
         select("SNP", "Estimate", std = "Std. Error", "df",
